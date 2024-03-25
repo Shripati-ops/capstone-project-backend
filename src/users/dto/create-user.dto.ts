@@ -30,8 +30,8 @@ export class CreateUserDto {
   role: string;
 
   constructor(data: Partial<CreateUserDto>) {
-    this.name = data.name || '';
-    this.avatar = data.avatar || '';
-    this.role = data.role || 'USER';
+    this.name = data?.name || '';
+    this.avatar = data?.avatar || '';
+    this.role = data?.role || 'USER';
   }
 }
