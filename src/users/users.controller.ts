@@ -1,8 +1,17 @@
-import { Body, Controller, HttpCode, Post, Req, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { Response } from 'express';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { SignInDto } from './dto/signin-user.dto';
+import { UserGuard } from './users.guard';
 
 @Controller('users')
 export class UsersController {
@@ -30,6 +39,17 @@ export class UsersController {
   ) {
     try {
       return await this.userService.signInUser(res, body);
+    } catch (err) {
+      console.error(err);
+      res.send({ message: 'Internal Server Error' });
+    }
+  }
+  @Post('refresh')
+  @UseGuards(UserGuard)
+  async generateAccessToken(@Body() body: any, @Res() res: Response) {
+    try {
+      const { user_id } = body;
+      return await this.userService.generateAccessToken(res, user_id);
     } catch (err) {
       console.error(err);
       res.send({ message: 'Internal Server Error' });

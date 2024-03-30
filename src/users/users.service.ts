@@ -1,11 +1,11 @@
-import { HttpStatus, Injectable, Req, Res } from '@nestjs/common';
+import { HttpStatus, Injectable, Req, Res, UseGuards } from '@nestjs/common';
 import { userModel } from './entities/users.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { hash } from 'bcrypt';
 import { Response } from 'express';
 import { SignInDto } from './dto/signin-user.dto';
 import { JwtService } from '@nestjs/jwt';
-import { iif } from 'rxjs';
+import { UserGuard } from './users.guard';
 @Injectable()
 export class UsersService {
   constructor(private jwtService: JwtService) {}
@@ -65,6 +65,22 @@ export class UsersService {
     res.status(200).send({
       status: 200,
       data: { accessToken, refreshToken },
+      message: 'Logged in Successfully',
+    });
+  }
+
+  async generateAccessToken(@Res() res: Response, user_id) {
+    const userData = await userModel.findOne({ _id: user_id });
+    const accessToken = this.jwtService.sign(
+      { userData },
+      {
+        secret: process.env.JWT_ACCESS_SECRET,
+        expiresIn: '1h',
+      },
+    );
+    res.status(200).send({
+      status: 200,
+      data: { accessToken },
       message: 'Logged in Successfully',
     });
   }

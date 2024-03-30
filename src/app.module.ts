@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import { CampaignsModule } from './campaigns/campaigns.module';
 @Module({
   imports: [
     AuthModule,
@@ -15,6 +16,7 @@ import { JwtModule } from '@nestjs/jwt';
       secret: process.env.JWT_ACCESS_SECRET,
       signOptions: { expiresIn: '1h' },
     }),
+    CampaignsModule,
     
   ],
   controllers: [AppController],
