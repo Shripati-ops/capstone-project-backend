@@ -1,73 +1,57 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Backend Service README
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Welcome to our backend service documentation. This service provides functionality for managing users and campaigns.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Users Module
 
-## Description
+### Overview
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+The users module handles user registration, login, and generation of access tokens for authentication.
 
-## Installation
+### Features
 
-```bash
-$ npm install
-```
+1. **Registration:**
+   - Allows users to create a new account by providing necessary details.
+2. **Login:**
+   - Provides authentication for registered users by verifying credentials.
+3. **Generation of New Access Token:**
+   - Generates a new access token for authenticated users to access protected routes.
 
-## Running the app
+## Campaign Module
 
-```bash
-# development
-$ npm run start
+### Overview
 
-# watch mode
-$ npm run start:dev
+The campaign module manages campaigns and associated functionalities.
 
-# production mode
-$ npm run start:prod
-```
+### Features
 
-## Test
+1. **Route Protection using Guards:**
+   - Ensures that only authenticated users can access campaign-related routes.
+2. **Listing of All Campaigns:**
+   - Provides a list of all existing campaigns for easy reference and management.
+3. **Creation of Campaigns:**
+   - Enables users to create new campaigns with relevant details.
 
-```bash
-# unit tests
-$ npm run test
+## Getting Started
 
-# e2e tests
-$ npm run test:e2e
+### Prerequisites
 
-# test coverage
-$ npm run test:cov
-```
+- Node.js
+- MongoDB
 
-## Support
+### Installation
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+1. Clone the repository: `git clone <repository_url>`
+2. Navigate to the project directory: `cd <project_directory>`
+3. Install dependencies: `npm install`
 
-## Stay in touch
+### Configuration
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+1. Set up environment variables:
+   - Create a `.env` file based on the `.env.example` template.
+   - Update the variables with appropriate values, such as database connection URI and JWT secret.
 
-## License
+### Running the Service
 
-Nest is [MIT licensed](LICENSE).
+1. Start the server: `npm run start:dev`
+2. The service will be accessible at the configured port (default: 3000).
