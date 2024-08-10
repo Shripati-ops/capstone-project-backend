@@ -1,7 +1,14 @@
-import { HttpStatus, Injectable, Req, Res, UseGuards } from '@nestjs/common';
+import {
+  HttpStatus,
+  Injectable,
+  Logger,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { userModel } from './entities/users.entity';
 import { CreateUserDto } from './dto/create-user.dto';
-import { hash } from 'bcrypt';
+import { hash, compare } from 'bcrypt';
 import { Response } from 'express';
 import { SignInDto } from './dto/signin-user.dto';
 import { JwtService } from '@nestjs/jwt';
@@ -36,7 +43,7 @@ export class UsersService {
 
   async signInUser(@Res() res: Response, body: SignInDto) {
     const { username, email, password } = body;
-    let userData = {};
+    let userData;
     if (!username) {
       userData = await userModel.findOne({ email });
     } else {
@@ -46,27 +53,33 @@ export class UsersService {
     if (!userData) {
       return res.status(401).send({ message: 'No user found' });
     }
-
-    const accessToken = this.jwtService.sign(
-      { userData },
-      {
-        secret: process.env.JWT_ACCESS_SECRET,
-        expiresIn: '1h',
-      },
-    );
-    const refreshToken = this.jwtService.sign(
-      { userData },
-      {
-        secret: process.env.JWT_REFRESH_SECRET,
-        expiresIn: '1d',
-      },
-    );
-
-    res.status(200).send({
-      status: 200,
-      data: { accessToken, refreshToken },
-      message: 'Logged in Successfully',
-    });
+    if (await compare(password, userData?.password)) {
+      const accessToken = this.jwtService.sign(
+        { userData },
+        {
+          secret: process.env.JWT_ACCESS_SECRET,
+          expiresIn: '1h',
+        },
+      );
+      const refreshToken = this.jwtService.sign(
+        { userData },
+        {
+          secret: process.env.JWT_REFRESH_SECRET,
+          expiresIn: '1d',
+        },
+      );
+      res.status(200).send({
+        status: 200,
+        data: { accessToken, refreshToken },
+        message: 'Logged in Successfully',
+      });
+    } else {
+      res.status(401).send({
+        status: 401,
+        data: { message: 'Incorrect Password or username' },
+        message: 'Log in failure',
+      });
+    }
   }
 
   async generateAccessToken(@Res() res: Response, user_id) {
